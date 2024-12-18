@@ -6,21 +6,17 @@
 
 using namespace std;
 
-struct Character {
-    string name;
-    string Nickname;
-    int health;
-    int maxHealth;
-    int mana;
-    int maxMana;
-    int attack;
-    int defense;
-};
+int randomInRange(int x, int y) {
+     return x + rand() % (y - x + 1);
+}
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    srand(static_cast<unsigned int>(time(0)));
+
     ui->setupUi(this);
 
     ui->stackedWidget->setCurrentWidget(ui->page);
@@ -32,6 +28,89 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::opponentTurn(Character& attacker, Character& defender) {
+    int choice = randomInRange(0, 1);
+
+        if (choice == 0) {
+            attack(attacker, defender);
+            return;
+        }
+        if (choice == 1) {
+            heal(attacker);
+            return;
+        }
+}
+
+void MainWindow::attack(Character& attacker, Character& defender) {
+    int miss = randomInRange(0, 100);
+
+    if (miss < 10) {
+        if(attacker.name == player1.name) {
+            ui->label_11->setText(QString::fromStdString(attacker.name) + " miss the attack!");
+            return;
+        }
+
+        if(attacker.name == player2.name) {
+            ui->label_12->setText(QString::fromStdString(attacker.name) + " miss the attack!");
+            return;
+        }
+
+        if(attacker.name == opponent.name) {
+            ui->label_12->setText(QString::fromStdString(attacker.name) + " miss the attack!");
+            return;
+        }
+        return;
+    }
+
+    int damage = max(0, attacker.attack - defender.defense);
+    defender.health -= damage;
+
+    if(attacker.name == player1.name) {
+        ui->label_11->setText(QString::fromStdString(attacker.name) + " attack for " + QString::number(damage));
+        return;
+    }
+
+    if(attacker.name == player2.name) {
+        ui->label_12->setText(QString::fromStdString(attacker.name) + " attack for " + QString::number(damage));
+        return;
+    }
+
+    if(attacker.name == opponent.name) {
+        ui->label_12->setText(QString::fromStdString(attacker.name) + " attack for " + QString::number(damage));
+        return;
+    }
+}
+
+void MainWindow::heal(Character& player) {
+    int heal = randomInRange(30, 40);
+
+    if (player.mana >= 15) {
+        if (player.health + heal > player.maxHealth) {
+            int heal = player.maxHealth - player.health;
+            player.health += heal;
+            player.mana -= 10;
+            ui->label_11->setText(QString::fromStdString(player.name) + " heal for " + QString::number(heal) + " health points!");
+            return;
+        }
+    } else {
+        if(player.name == player1.name) {
+            ui->label_11->setText(QString::fromStdString(player.name) + " doesnt have enough mana!");
+            return;
+        }
+
+        if(player.name == player2.name) {
+            ui->label_12->setText(QString::fromStdString(player.name) + " doesnt have enough mana!");
+            return;
+        }
+
+        if(player.name == opponent.name) {
+            ui->label_12->setText(QString::fromStdString(player.name) + " doesnt have enough mana!");
+            return;
+        }
+    }
 }
 
 void MainWindow::on_lineEdit_textChanged(const QString &arg1)
@@ -66,9 +145,6 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    Character player1;
-    Character opponent;
-
     QString fromStoredNickname1 = ui->lineEdit->text();
 
     player1.name = "Frieren";
@@ -89,22 +165,54 @@ void MainWindow::on_pushButton_5_clicked()
     opponent.defense = 15;
     opponent.attack = 50;
 
-        ui->label_4->setText(QString::fromStdString(player1.Nickname) + "` Stats. (" + QString::fromStdString(player1.name) +")");
+    ui->label_4->setText(QString::fromStdString(player1.Nickname) + "` Stats. (" + QString::fromStdString(player1.name) +")");
+
+    ui->label_5->setText(QString::fromStdString(opponent.Nickname + "`Stats."));
 
     ui->label_6->setText("HP: " + QString::number(player1.health));
 
     ui->label_7->setText("Mana: " + QString::number(player1.mana));
 
-    ui->label_5->setText(QString::fromStdString(opponent.Nickname + "`Stats."));
-
     ui->label_8-> setText("HP: " + QString::number(opponent.health));
 
     ui->label_9-> setText("Mana: " + QString::number(opponent.mana));
 
-    while (player1.health > 0 || opponent.health > 0) {
+    ui->stackedWidget->setCurrentWidget(ui->page_4);
+}
 
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    attack(player1, opponent);
+
+    opponentTurn(opponent, player1);
+
+    if(player1.health <= 0) {
+
+        ui->label_13->setText("you are defeated!");
+
+        ui->stackedWidget->setCurrentWidget(ui->page_5);
+    }
+
+    if(opponent.health <= 0) {
+        ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
+
+        ui->stackedWidget->setCurrentWidget(ui->page_5);
     }
 
 
-    ui->stackedWidget->setCurrentWidget(ui->page_4);
+    ui->label_6->setText("HP: " + QString::number(player1.health));
+
+    ui->label_7->setText("Mana: " + QString::number(player1.mana));
+
+    ui->label_8->setText("HP: " + QString::number(opponent.health));
+
+    ui->label_9->setText("Mana: " + QString::number(opponent.mana));
 }
+
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page);
+}
+
