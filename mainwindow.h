@@ -50,6 +50,16 @@ private slots:
 
     void on_pushButton_10_clicked();
 
+    void on_pushButton_11_clicked();
+
+    void setupPlayerAndOpponent();
+
+    void checkGameOver();
+
+    void updateMessage(Character& character, const QString& message);
+
+    void updateStats();
+
 private:
     Ui::MainWindow *ui;
     QString storedNickname;
