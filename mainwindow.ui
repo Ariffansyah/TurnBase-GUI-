@@ -14,8 +14,8 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="maximumSize">
        <size>
@@ -24,7 +24,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>7</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -43,13 +43,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>Adventure Mode</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="pushButton_3">
           <property name="text">
            <string>Multiplayer</string>
@@ -59,17 +52,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_2">
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="2" column="0">
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="text">
-           <string>Submit</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEdit"/>
-        </item>
+       <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
@@ -77,10 +60,27 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="pushButton_15">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEdit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="text">
+           <string>Submit</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_3">
-       <layout class="QGridLayout" name="gridLayout_2">
+       <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
@@ -102,49 +102,28 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="pushButton_13">
+          <property name="text">
+           <string>Eisen</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="pushButton_14">
+          <property name="text">
+           <string>Heiter</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_4">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Player1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Opponent</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Health</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="QLabel" name="label_8">
           <property name="text">
            <string>Health</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Mana</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Mana</string>
           </property>
          </widget>
         </item>
@@ -155,24 +134,66 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QPushButton" name="pushButton_8">
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Defense</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QPushButton" name="pushButton_9">
-          <property name="text">
-           <string>Zolktaar</string>
+           <string>Opponent</string>
           </property>
          </widget>
         </item>
         <item row="6" column="0">
          <widget class="QPushButton" name="pushButton_11">
           <property name="text">
-           <string>Heal</string>
+           <string>Heal | Mana Usage: 10</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>. . .</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Player1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Health</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QPushButton" name="pushButton_9">
+          <property name="text">
+           <string>Special Skills</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Mana</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="pushButton_8">
+          <property name="text">
+           <string>Defense | Mana Usage: 10</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Mana</string>
           </property>
          </widget>
         </item>
@@ -185,13 +206,6 @@
         </item>
         <item row="8" column="0">
          <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>. . .</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="label_12">
           <property name="text">
            <string>. . .</string>
           </property>
@@ -212,6 +226,255 @@
          <widget class="QPushButton" name="pushButton_10">
           <property name="text">
            <string>Return</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_6">
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>Player 1 enter your name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QPushButton" name="pushButton_16">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="pushButton_12">
+          <property name="text">
+           <string>submit</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEdit_2"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="lineEdit_3"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_26">
+          <property name="text">
+           <string>Player 2 enter your name:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_7">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>To be filled</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_19">
+          <property name="text">
+           <string>Frieren</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="pushButton_17">
+          <property name="text">
+           <string>Himmel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="pushButton_18">
+          <property name="text">
+           <string>Eisen</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="pushButton_20">
+          <property name="text">
+           <string>Heiter</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>TO be filled</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QPushButton" name="pushButton_21">
+          <property name="text">
+           <string>Frieren</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QPushButton" name="pushButton_23">
+          <property name="text">
+           <string>Himmel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QPushButton" name="pushButton_22">
+          <property name="text">
+           <string>Eisen</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QPushButton" name="pushButton_24">
+          <property name="text">
+           <string>Heiter</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QPushButton" name="pushButton_25">
+          <property name="text">
+           <string>Submit</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_8">
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="4" column="1">
+         <widget class="QPushButton" name="pushButton_31">
+          <property name="text">
+           <string>Defense | Mana Usage: 10</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="pushButton_27">
+          <property name="text">
+           <string>Defense | Mana Usage: 10</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QPushButton" name="pushButton_32">
+          <property name="text">
+           <string>Special Skill</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_17">
+          <property name="text">
+           <string>player</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="label_24">
+          <property name="text">
+           <string>-</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_22">
+          <property name="text">
+           <string>Mana</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_20">
+          <property name="text">
+           <string>player2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QPushButton" name="pushButton_28">
+          <property name="text">
+           <string>Special Skill</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>Mana</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QPushButton" name="pushButton_29">
+          <property name="text">
+           <string>Heal | Mana Usage: 10</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="pushButton_30">
+          <property name="text">
+           <string>Attack</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QPushButton" name="pushButton_33">
+          <property name="text">
+           <string>Heal | Mana Usage: 10</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="pushButton_26">
+          <property name="text">
+           <string>Attack</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_21">
+          <property name="text">
+           <string>Health</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_23">
+          <property name="text">
+           <string>Round Log:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_18">
+          <property name="text">
+           <string>Health</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="label_25">
+          <property name="text">
+           <string>-</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLabel" name="label_27">
+          <property name="text">
+           <string>Turn</string>
           </property>
          </widget>
         </item>
