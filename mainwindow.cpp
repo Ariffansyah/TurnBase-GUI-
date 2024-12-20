@@ -41,7 +41,7 @@ void MainWindow::randomOpp(Character& opponent) {
         return;
     }
 
-    if (random >= 21 && random <= 25) {
+    if (random >= 21 && random <= 30) {
         opponent = {"Demon King", "Demon King", 1000, 1000, 500, 500, 50, 20, 20};
     }
 
@@ -484,6 +484,11 @@ void MainWindow::on_pushButton_12_clicked()
     player1.Nickname = ui->lineEdit_2->text().toStdString();
     player2.Nickname = ui->lineEdit_3->text().toStdString();
 
+    if (player1.Nickname == "" | player2.Nickname == "") {
+        ui->label_29->setText("Filled the Nickname");
+        return ui->stackedWidget->setCurrentWidget(ui->page_6);
+    }
+
     ui->label_15->setText(QString::fromStdString(player1.Nickname) + " choose your character!");
     ui->label_16->setText(QString::fromStdString(player2.Nickname) + " choose your character!");
     ui->stackedWidget->setCurrentWidget(ui->page_7);
@@ -538,6 +543,12 @@ void MainWindow::on_pushButton_20_clicked()
 
 void MainWindow::on_pushButton_25_clicked()
 {
+
+    if(player1.name == "" | player2.name =="") {
+        ui->label_28->setText("Please choose character!");
+        return ui->stackedWidget->setCurrentWidget(ui->page_7);;
+    }
+
     ui->stackedWidget->setCurrentWidget(ui->page_8);
     nextTurn();
 }

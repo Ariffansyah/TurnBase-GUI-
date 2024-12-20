@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="maximumSize">
        <size>
@@ -24,7 +24,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>7</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -233,17 +233,17 @@
       </widget>
       <widget class="QWidget" name="page_6">
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_14">
-          <property name="text">
-           <string>Player 1 enter your name:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
+        <item row="7" column="0">
          <widget class="QPushButton" name="pushButton_16">
           <property name="text">
            <string>Back</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_26">
+          <property name="text">
+           <string>Player 2 enter your name:</string>
           </property>
          </widget>
         </item>
@@ -254,16 +254,36 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEdit_2"/>
-        </item>
         <item row="3" column="0">
          <widget class="QLineEdit" name="lineEdit_3"/>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_26">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>Player 2 enter your name:</string>
+           <string>Player 1 enter your name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEdit_2"/>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="label_29">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -271,17 +291,17 @@
       </widget>
       <widget class="QWidget" name="page_7">
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_15">
+        <item row="7" column="0">
+         <widget class="QPushButton" name="pushButton_23">
           <property name="text">
-           <string>To be filled</string>
+           <string>Himmel</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_19">
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_16">
           <property name="text">
-           <string>Frieren</string>
+           <string>TO be filled</string>
           </property>
          </widget>
         </item>
@@ -299,6 +319,13 @@
           </property>
          </widget>
         </item>
+        <item row="9" column="0">
+         <widget class="QPushButton" name="pushButton_24">
+          <property name="text">
+           <string>Heiter</string>
+          </property>
+         </widget>
+        </item>
         <item row="4" column="0">
          <widget class="QPushButton" name="pushButton_20">
           <property name="text">
@@ -306,24 +333,31 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_16">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_15">
           <property name="text">
-           <string>TO be filled</string>
+           <string>To be filled</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QPushButton" name="pushButton_21">
+        <item row="12" column="0">
+         <widget class="QLabel" name="label_28">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QPushButton" name="pushButton_25">
+          <property name="text">
+           <string>Submit</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_19">
           <property name="text">
            <string>Frieren</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QPushButton" name="pushButton_23">
-          <property name="text">
-           <string>Himmel</string>
           </property>
          </widget>
         </item>
@@ -334,19 +368,25 @@
           </property>
          </widget>
         </item>
-        <item row="9" column="0">
-         <widget class="QPushButton" name="pushButton_24">
+        <item row="6" column="0">
+         <widget class="QPushButton" name="pushButton_21">
           <property name="text">
-           <string>Heiter</string>
+           <string>Frieren</string>
           </property>
          </widget>
         </item>
         <item row="10" column="0">
-         <widget class="QPushButton" name="pushButton_25">
-          <property name="text">
-           <string>Submit</string>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
