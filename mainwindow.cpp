@@ -31,17 +31,17 @@ MainWindow::~MainWindow() {
 void MainWindow::randomOpp(Character& opponent) {
     int random = randomInRange(0, 100);
 
-    if (random >= 0 && random <= 10) {
+    if (random >= 0 && random <= 20) {
         opponent = { "Solar Dragon", "Solar Dragon", 200, 200, 100, 100, 25, 15, 15 };
         return;
     }
 
-    if (random >= 11 && random <= 20) {
+    if (random >= 21 && random <= 40) {
         opponent = {"Aura", "Aura", 500, 500, 150, 150, 25, 10, 10};
         return;
     }
 
-    if (random >= 21 && random <= 30) {
+    if (random >= 41 && random <= 50) {
         opponent = {"Demon King", "Demon King", 1000, 1000, 500, 500, 50, 20, 20};
     }
 
@@ -314,7 +314,15 @@ void MainWindow::on_pushButton_clicked() {
 
 void MainWindow::on_pushButton_4_clicked() {
     player1.Nickname = ui->lineEdit->text().toStdString();
-    ui->label_3->setText(QString::fromStdString(player1.Nickname) + ", choose your character!");
+
+    if (player1.Nickname == "") {
+        ui->label_30->setText("Please fill the nickname!");
+        return ui->stackedWidget->setCurrentWidget(ui->page_2);
+    } else {
+        ui->label_30->setText("");
+    }
+
+    ui->label_3->setText(QString::fromStdString(player1.Nickname) + " choose your character!");
     ui->stackedWidget->setCurrentWidget(ui->page_3);
 }
 
@@ -454,9 +462,11 @@ void MainWindow::checkGameOverMP() {
     if (player1.health <= 0) {
         ui->label_13->setText(QString::fromStdString(player2.Nickname) + " is the winner!");
         ui->stackedWidget->setCurrentWidget(ui->page_5);
+        currentTurn = 1;
     } else if (player2.health <= 0) {
         ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
         ui->stackedWidget->setCurrentWidget(ui->page_5);
+        currentTurn = 1;
     }
 }
 
@@ -469,14 +479,14 @@ void MainWindow::on_pushButton_15_clicked()
 
 void MainWindow::on_lineEdit_2_textChanged(const QString &arg1)
 {
-    storedNickname = arg1.isEmpty() ? "Homan" : arg1;
+    storedNickname = arg1;
     qDebug() << "Nickname stored: " << storedNickname;
 }
 
 void MainWindow::on_lineEdit_3_textChanged(const QString &arg1)
 {
-    storedNickname2 = arg1.isEmpty() ? "Homan" : arg1;
-    qDebug() << "Nickname stored: " << storedNickname2;
+    storedNickname2 = arg1;
+    qDebug() << "Nickname2 stored: " << storedNickname2;
 }
 
 void MainWindow::on_pushButton_12_clicked()
@@ -487,6 +497,8 @@ void MainWindow::on_pushButton_12_clicked()
     if (player1.Nickname == "" | player2.Nickname == "") {
         ui->label_29->setText("Filled the Nickname");
         return ui->stackedWidget->setCurrentWidget(ui->page_6);
+    } else {
+        ui->label_29->setText("");
     }
 
     ui->label_15->setText(QString::fromStdString(player1.Nickname) + " choose your character!");
@@ -510,7 +522,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_19_clicked()
 {
-    player1 = { "Frieren", ui->lineEdit->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
+    player1 = { "Frieren", ui->lineEdit_2->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
     ui->pushButton_28->setText("Zoltraak");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
@@ -518,7 +530,7 @@ void MainWindow::on_pushButton_19_clicked()
 
 void MainWindow::on_pushButton_17_clicked()
 {
-    player1 = {"Himmel", ui->lineEdit->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
+    player1 = {"Himmel", ui->lineEdit_2->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
     ui->pushButton_28->setText("Swordsman");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
@@ -526,7 +538,7 @@ void MainWindow::on_pushButton_17_clicked()
 
 void MainWindow::on_pushButton_18_clicked()
 {
-    player1 = {"Eisen", ui->lineEdit->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
+    player1 = {"Eisen", ui->lineEdit_2->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
     ui->pushButton_28->setText("Lighting Strike");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
@@ -535,7 +547,7 @@ void MainWindow::on_pushButton_18_clicked()
 
 void MainWindow::on_pushButton_20_clicked()
 {
-    player1 = {"Heiter", ui->lineEdit->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
+    player1 = {"Heiter", ui->lineEdit_2->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
     ui->pushButton_28->setText("Recovery");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
@@ -547,6 +559,8 @@ void MainWindow::on_pushButton_25_clicked()
     if(player1.name == "" | player2.name =="") {
         ui->label_28->setText("Please choose character!");
         return ui->stackedWidget->setCurrentWidget(ui->page_7);;
+    } else {
+        ui->label_28->setText("");
     }
 
     ui->stackedWidget->setCurrentWidget(ui->page_8);
@@ -555,7 +569,7 @@ void MainWindow::on_pushButton_25_clicked()
 
 void MainWindow::on_pushButton_21_clicked()
 {
-    player2 = { "Frieren", ui->lineEdit->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
+    player2 = { "Frieren", ui->lineEdit_3->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
     ui->pushButton_32->setText("Zoltraak");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
@@ -564,7 +578,7 @@ void MainWindow::on_pushButton_21_clicked()
 
 void MainWindow::on_pushButton_23_clicked()
 {
-    player2 = {"Himmel", ui->lineEdit->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
+    player2 = {"Himmel", ui->lineEdit_3->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
     ui->pushButton_32->setText("Swordsman");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
@@ -573,7 +587,7 @@ void MainWindow::on_pushButton_23_clicked()
 
 void MainWindow::on_pushButton_22_clicked()
 {
-    player2 = {"Eisen", ui->lineEdit->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
+    player2 = {"Eisen", ui->lineEdit_3->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
     ui->pushButton_32->setText("Lighting Strike");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
@@ -582,7 +596,7 @@ void MainWindow::on_pushButton_22_clicked()
 
 void MainWindow::on_pushButton_24_clicked()
 {
-    player2 = {"Heiter", ui->lineEdit->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
+    player2 = {"Heiter", ui->lineEdit_3->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
     ui->pushButton_32->setText("Recovery");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
