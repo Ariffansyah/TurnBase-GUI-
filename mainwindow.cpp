@@ -713,4 +713,3 @@ void MainWindow::on_pushButton_33_clicked()
     ManaRegen(player2);
     Passive(player2);
 }
-
