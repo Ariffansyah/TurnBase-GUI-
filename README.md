@@ -13,7 +13,7 @@ A turn-based RPG game built using the Qt framework, focusing on core mechanics a
 
 ## Screenshots
 
-https://cdn.discordapp.com/attachments/872799122556596226/1320426318545944737/image.png?ex=67698e56&is=67683cd6&hm=86c4bdde4203dabf49bd921ea7856bad30bb3ae59a90104bb3a132ae3b9889eb&
+![image](https://github.com/user-attachments/assets/9c0f0460-6b14-4177-8cde-7a8fd23ecbf8)
 
 ---
 
