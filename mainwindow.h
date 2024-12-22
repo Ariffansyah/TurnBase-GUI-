@@ -81,6 +81,8 @@ private slots:
 
     void checkGameOverMP();
 
+    void roundLog(const QString message);
+
     void ManaRegen(Character& player);
 
     void ResetDef();

@@ -24,7 +24,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -246,17 +246,13 @@
       </widget>
       <widget class="QWidget" name="page_6">
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="7" column="0">
-         <widget class="QPushButton" name="pushButton_16">
-          <property name="text">
-           <string>Back</string>
-          </property>
-         </widget>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEdit_2"/>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_26">
+        <item row="8" column="0">
+         <widget class="QLabel" name="label_29">
           <property name="text">
-           <string>Player 2 enter your name:</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -267,15 +263,29 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="lineEdit_3"/>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_14">
           <property name="text">
            <string>Player 1 enter your name:</string>
           </property>
          </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_26">
+          <property name="text">
+           <string>Player 2 enter your name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QPushButton" name="pushButton_16">
+          <property name="text">
+           <string>Back</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="lineEdit_3"/>
         </item>
         <item row="5" column="0">
          <spacer name="verticalSpacer_2">
@@ -289,16 +299,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEdit_2"/>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_29">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>

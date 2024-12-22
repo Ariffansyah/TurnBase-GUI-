@@ -3,6 +3,7 @@
 
 #include <string>
 #include <QDebug>
+#include <fstream>/
 
 using namespace std;
 
@@ -26,6 +27,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::roundLog(const QString message) {
+    ofstream outputFile("playersave.txt", ios::app);
+
+    if(outputFile.is_open()){
+        outputFile << message.toStdString() << endl;
+        outputFile.close();
+    } else {
+        qDebug() << "cant open the file";
+        return;
+    }
 }
 
 void MainWindow::randomOpp(Character& opponent) {
@@ -264,8 +277,10 @@ void MainWindow::updateStats() {
 void MainWindow::updateMessageMP(Character& character, const QString& message) {
     if (character.name == player1.name) {
         ui->label_24->setText(message);
+        roundLog(message);
     } else if (character.name == player2.name){
         ui->label_25->setText(message);
+        roundLog(message);
     }
 }
 
@@ -468,6 +483,8 @@ void MainWindow::checkGameOverMP() {
         ui->stackedWidget->setCurrentWidget(ui->page_5);
         currentTurn = 1;
     }
+
+
 }
 
 void MainWindow::on_pushButton_15_clicked()
