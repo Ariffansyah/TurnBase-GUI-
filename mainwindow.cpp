@@ -3,7 +3,8 @@
 
 #include <string>
 #include <QDebug>
-#include <fstream>/
+#include <fstream>
+#include <ctime>
 
 using namespace std;
 
@@ -32,7 +33,18 @@ MainWindow::~MainWindow() {
 void MainWindow::roundLog(const QString message) {
     ofstream outputFile("playersave.txt", ios::app);
 
+    time_t currentTime = time(nullptr);
+
+    struct tm* timeInfo = localtime(&currentTime);
+
     if(outputFile.is_open()){
+        outputFile << "date and time: "
+                    << 1900 + timeInfo->tm_year << "-"
+                    << 1 + timeInfo->tm_mon << "-"
+                    << timeInfo->tm_mday << " "
+                    << timeInfo->tm_hour << ":"
+                    << timeInfo->tm_min << ":"
+                    << timeInfo->tm_sec << endl;
         outputFile << message.toStdString() << endl;
         outputFile.close();
     } else {
@@ -46,16 +58,20 @@ void MainWindow::randomOpp(Character& opponent) {
 
     if (random >= 0 && random <= 20) {
         opponent = { "Solar Dragon", "Solar Dragon", 200, 200, 100, 100, 25, 15, 15 };
+        updateMessage(opponent, "A fierce " + QString::fromStdString(opponent.name) + " appears!");
         return;
-    }
-
-    if (random >= 21 && random <= 40) {
+    } else if (random >= 21 && random <= 40) {
         opponent = {"Aura", "Aura", 500, 500, 150, 150, 25, 10, 10};
+        updateMessage(opponent, "A mighty " + QString::fromStdString(opponent.name) + " appears!");
         return;
-    }
-
-    if (random >= 41 && random <= 50) {
+    } else if (random >= 41 && random <= 50) {
         opponent = {"Demon King", "Demon King", 1000, 1000, 500, 500, 50, 20, 20};
+        updateMessage(opponent, "The powerful " + QString::fromStdString(opponent.name) + " appears!");
+        return;
+    } else {
+        opponent = {"Draht", "Draht", 100, 100 , 40, 40, 20, 10, 10};
+        updateMessage(opponent, "A weak " + QString::fromStdString(opponent.name) + " appears!");
+        return;
     }
 
     opponent = {"Draht", "Draht", 100, 100 , 40, 40, 20, 10, 10};
@@ -116,8 +132,21 @@ void MainWindow::heal(Character& player) {
         return;
     }
 
-    int healAmount = player.name == "Heiter" ? randomInRange(40, 60) : randomInRange(10, 30);
-    healAmount = min(healAmount, player.maxHealth - player.health);
+    int healingRanges[][2] = {
+        {40, 60}, // Heiter's
+        {10, 30}
+    };
+
+    int healMin = healingRanges[1][0];
+    int healMax = healingRanges[1][1];
+
+    if (player.name == "Heiter") {
+        healMin = healingRanges[0][0];
+        healMax = healingRanges[0][1];
+    }
+
+    int healAmount = randomInRange(healMin, healMax);
+    healAmount = std::min(healAmount, player.maxHealth - player.health);
 
     player.health += healAmount;
     player.mana -= 10;
@@ -262,8 +291,10 @@ void MainWindow::Passive(Character& player){
 void MainWindow::updateMessage(Character& character, const QString& message) {
     if (character.name == player1.name) {
         ui->label_11->setText(message);
+        roundLog(message);
     } else {
         ui->label_12->setText(message);
+        roundLog(message);
     }
 }
 
@@ -304,6 +335,22 @@ void MainWindow::nextTurn() {
     updateUIForTurn();
 }
 
+void MainWindow::endTurn(){
+    opponentTurn(opponent, player1);
+    checkGameOver();
+    updateStats();
+    ManaRegen(player1);
+    Passive(player1);
+}
+
+void MainWindow::endTurnMP(Character& player){
+    updateStatsMP();
+    checkGameOverMP();
+    nextTurn();
+    ManaRegen(player);
+    Passive(player);
+}
+
 void MainWindow::updateUIForTurn() {
     bool isPlayer1Turn = (currentTurn == 1);
 
@@ -341,60 +388,6 @@ void MainWindow::on_pushButton_4_clicked() {
     ui->stackedWidget->setCurrentWidget(ui->page_3);
 }
 
-void MainWindow::on_pushButton_7_clicked() {
-    CritChance(player1, opponent);
-    opponentTurn(opponent, player1);
-    checkGameOver();
-    updateStats();
-    ManaRegen(player1);
-    ResetDef();
-    Passive(player1);
-}
-
-void MainWindow::on_pushButton_11_clicked() {
-    heal(player1);
-    opponentTurn(opponent, player1);
-    checkGameOver();
-    updateStats();
-    ManaRegen(player1);
-    ResetDef();
-    Passive(player1);
-}
-
-void MainWindow::on_pushButton_8_clicked()
-{
-    defense(player1);
-    opponentTurn(opponent, player1);
-    checkGameOver();
-    updateStats();
-    ManaRegen(player1);
-    Passive(player1);
-}
-
-
-void MainWindow::on_pushButton_9_clicked()
-{
-    if(player1.name == "Frieren") {
-        Zoltraak(player1, opponent);
-    } else if (player1.name == "Eisen") {
-        LightingStrike(player1, opponent);
-    } else if (player1.name == "Himmel") {
-        Swordsman(player1, opponent);
-    } else if (player1.name == "Heiter") {
-        FullRecover(player1);
-    }
-
-    opponentTurn(opponent, player1);
-    checkGameOver();
-    updateStats();
-    ManaRegen(player1);
-    ResetDef();
-    Passive(player1);
-}
-
-void MainWindow::on_pushButton_10_clicked() {
-    ui->stackedWidget->setCurrentWidget(ui->page);
-}
 
 void MainWindow::SinglePlayerFrieren() {
     player1 = { "Frieren", ui->lineEdit->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
@@ -439,6 +432,45 @@ void MainWindow::SinglePlayerHeiter() {
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     ui->label_5->setText(QString::fromStdString(opponent.Nickname) + "`s Stats");
     updateStats();
+}
+
+void MainWindow::on_pushButton_7_clicked() {
+    CritChance(player1, opponent);
+    endTurn();
+    ResetDef();
+}
+
+void MainWindow::on_pushButton_11_clicked() {
+    heal(player1);
+    endTurn();
+    ResetDef();
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    defense(player1);
+    endTurn();
+}
+
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    if(player1.name == "Frieren") {
+        Zoltraak(player1, opponent);
+    } else if (player1.name == "Eisen") {
+        LightingStrike(player1, opponent);
+    } else if (player1.name == "Himmel") {
+        Swordsman(player1, opponent);
+    } else if (player1.name == "Heiter") {
+        FullRecover(player1);
+    }
+
+    endTurn();
+    ResetDef();
+}
+
+void MainWindow::on_pushButton_10_clicked() {
+    ui->stackedWidget->setCurrentWidget(ui->page);
 }
 
 void MainWindow::on_pushButton_5_clicked() {
@@ -624,23 +656,15 @@ void MainWindow::on_pushButton_24_clicked()
 void MainWindow::on_pushButton_26_clicked()
 {
     CritChance(player1, player2);
-    updateStatsMP();
-    checkGameOverMP();
-    nextTurn();
+    endTurnMP(player2);
     ResetDef();
-    ManaRegen(player1);
-    Passive(player1);
 }
 
 
 void MainWindow::on_pushButton_27_clicked()
 {
     defense(player1);
-    updateStatsMP();
-    checkGameOverMP();
-    nextTurn();
-    ManaRegen(player1);
-    Passive(player1);
+    endTurnMP(player2);
 }
 
 void MainWindow::on_pushButton_28_clicked()
@@ -655,47 +679,31 @@ void MainWindow::on_pushButton_28_clicked()
         FullRecover(player1);
     }
 
-    checkGameOverMP();
-    updateStatsMP();
-    nextTurn();
+    endTurnMP(player2);
     ResetDef();
-    ManaRegen(player1);
-    Passive(player1);
 }
 
 
 void MainWindow::on_pushButton_29_clicked()
 {
     heal(player1);
-    checkGameOverMP();
-    updateStatsMP();
-    nextTurn();
+    endTurnMP(player2);
     ResetDef();
-    ManaRegen(player1);
-    Passive(player1);
 }
 
 
 void MainWindow::on_pushButton_30_clicked()
 {
     CritChance(player2, player1);
-    updateStatsMP();
-    checkGameOverMP();
-    nextTurn();
+    endTurnMP(player2);
     ResetDef();
-    ManaRegen(player2);
-    Passive(player2);
 }
 
 
 void MainWindow::on_pushButton_31_clicked()
 {
     defense(player2);
-    updateStatsMP();
-    checkGameOverMP();
-    nextTurn();
-    ManaRegen(player1);
-    Passive(player2);
+    endTurnMP(player2);
 }
 
 
@@ -723,10 +731,6 @@ void MainWindow::on_pushButton_32_clicked()
 void MainWindow::on_pushButton_33_clicked()
 {
     heal(player2);
-    checkGameOverMP();
-    updateStatsMP();
-    nextTurn();
+    endTurnMP(player2);
     ResetDef();
-    ManaRegen(player2);
-    Passive(player2);
 }

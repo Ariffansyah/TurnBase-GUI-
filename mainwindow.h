@@ -55,6 +55,10 @@ private slots:
 
     void randomOpp(Character& opponent);
 
+    void endTurn();
+
+    void endTurnMP(Character& player);
+
     void on_pushButton_clicked();
 
     void on_lineEdit_textChanged(const QString &arg1);
