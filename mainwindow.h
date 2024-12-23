@@ -167,5 +167,6 @@ private:
     Character player1;
     Character player2;
     Character opponent;
+    int fightCount = 0;
 };
 #endif // MAINWINDOW_H

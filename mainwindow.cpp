@@ -3,6 +3,7 @@
 
 #include <string>
 #include <QDebug>
+#include <QTimer>
 #include <fstream>
 #include <ctime>
 
@@ -59,18 +60,22 @@ void MainWindow::randomOpp(Character& opponent) {
     if (random >= 0 && random <= 20) {
         opponent = { "Solar Dragon", "Solar Dragon", 200, 200, 100, 100, 25, 15, 15 };
         updateMessage(opponent, "A fierce " + QString::fromStdString(opponent.name) + " appears!");
+        ui->label_5->setText("Solar Dragon' Stats");
         return;
     } else if (random >= 21 && random <= 40) {
         opponent = {"Aura", "Aura", 500, 500, 150, 150, 25, 10, 10};
         updateMessage(opponent, "A mighty " + QString::fromStdString(opponent.name) + " appears!");
+        ui->label_5->setText("Aura' Stats");
         return;
     } else if (random >= 41 && random <= 50) {
         opponent = {"Demon King", "Demon King", 1000, 1000, 500, 500, 50, 20, 20};
         updateMessage(opponent, "The powerful " + QString::fromStdString(opponent.name) + " appears!");
+        ui->label_5->setText("Demon King' Stats");
         return;
     } else {
         opponent = {"Draht", "Draht", 100, 100 , 40, 40, 20, 10, 10};
         updateMessage(opponent, "A weak " + QString::fromStdString(opponent.name) + " appears!");
+        ui->label_5->setText("Draht' Stats");
         return;
     }
 
@@ -133,20 +138,36 @@ void MainWindow::heal(Character& player) {
     }
 
     int healingRanges[][2] = {
-        {40, 60}, // Heiter's
+        {30, 50}, // Heiter's
         {10, 30}
     };
 
-    int healMin = healingRanges[1][0];
-    int healMax = healingRanges[1][1];
+    int healMin;
+    int healMax;
 
     if (player.name == "Heiter") {
         healMin = healingRanges[0][0];
         healMax = healingRanges[0][1];
+
+        for(int i = 0; i < 2; i++) {
+            int healAmount = randomInRange(healMin, healMax);
+            healAmount = min(healAmount, player.maxHealth - player.health);
+
+            player.health += healAmount;
+
+            updateMessage(player, QString::fromStdString(player.name) + " heals for " + QString::number(healAmount) + " health!");
+            updateMessageMP(player, QString::fromStdString(player.name) + " heals for " + QString::number(healAmount) + " health!");
+        }
+
+        player.mana -= 10;
+        return;
     }
 
+    healMin = healingRanges[1][0];
+    healMax = healingRanges[1][1];
+
     int healAmount = randomInRange(healMin, healMax);
-    healAmount = std::min(healAmount, player.maxHealth - player.health);
+    healAmount = min(healAmount, player.maxHealth - player.health);
 
     player.health += healAmount;
     player.mana -= 10;
@@ -268,7 +289,6 @@ void MainWindow::FullRecover(Character& player) {
     }
 
     int healAmount = (player.maxHealth - player.health) / 2;
-
     player.health += healAmount;
     player.mana -= 30;
 
@@ -306,10 +326,10 @@ void MainWindow::updateStats() {
 }
 
 void MainWindow::updateMessageMP(Character& character, const QString& message) {
-    if (character.name == player1.name) {
+    if (character.Nickname == player1.Nickname) {
         ui->label_24->setText(message);
         roundLog(message);
-    } else if (character.name == player2.name){
+    } else if (character.Nickname == player2.Nickname){
         ui->label_25->setText(message);
         roundLog(message);
     }
@@ -345,7 +365,7 @@ void MainWindow::endTurn(){
 
 void MainWindow::endTurnMP(Character& player){
     updateStatsMP();
-    checkGameOverMP();
+    checkGameOver();
     nextTurn();
     ManaRegen(player);
     Passive(player);
@@ -392,7 +412,7 @@ void MainWindow::on_pushButton_4_clicked() {
 void MainWindow::SinglePlayerFrieren() {
     player1 = { "Frieren", ui->lineEdit->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
 
-    ui->pushButton_9->setText("Zoltraak");
+    ui->pushButton_9->setText("Zoltraak | Mana cost: 30");
     randomOpp(opponent);
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
@@ -403,7 +423,7 @@ void MainWindow::SinglePlayerFrieren() {
 void MainWindow::SinglePlayerEisen() {
     player1 = {"Eisen", ui->lineEdit->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
 
-    ui->pushButton_9->setText("Lighting Strike");
+    ui->pushButton_9->setText("Lighting Strike | Mana cost: 30");
     randomOpp(opponent);
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
@@ -415,7 +435,7 @@ void MainWindow::SinglePlayerEisen() {
 void MainWindow::SinglePlayerHimmel() {
     player1 = {"Himmel", ui->lineEdit->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
 
-    ui->pushButton_9->setText("Swordsman");
+    ui->pushButton_9->setText("Swordsman | Mana cost: 30");
     randomOpp(opponent);
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
@@ -426,7 +446,7 @@ void MainWindow::SinglePlayerHimmel() {
 void MainWindow::SinglePlayerHeiter() {
     player1 = {"Heiter", ui->lineEdit->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
 
-    ui->pushButton_9->setText("Recovery");
+    ui->pushButton_9->setText("Recovery | Mana cost: 30");
     randomOpp(opponent);
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
@@ -496,13 +516,26 @@ void MainWindow::on_pushButton_14_clicked()
 }
 
 void MainWindow::checkGameOver() {
+
     if (player1.health <= 0) {
         ui->label_13->setText("You are defeated!");
         ui->stackedWidget->setCurrentWidget(ui->page_5);
-    } else if (opponent.health <= 0 || player2.health <= 0) {
+        return;
+    }
+
+    if (fightCount >= 3) {
         ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
         ui->stackedWidget->setCurrentWidget(ui->page_5);
+        return;
     }
+
+    if (opponent.health <= 0) {
+        updateMessage(opponent, QString::fromStdString(opponent.name) + " is defeated!");
+        randomOpp(opponent);
+        fightCount++;
+    }
+
+    QTimer::singleShot(1000, this, [this]() { checkGameOver(); });
 }
 
 void MainWindow::checkGameOverMP() {
@@ -515,8 +548,6 @@ void MainWindow::checkGameOverMP() {
         ui->stackedWidget->setCurrentWidget(ui->page_5);
         currentTurn = 1;
     }
-
-
 }
 
 void MainWindow::on_pushButton_15_clicked()
@@ -546,6 +577,9 @@ void MainWindow::on_pushButton_12_clicked()
     if (player1.Nickname == "" | player2.Nickname == "") {
         ui->label_29->setText("Filled the Nickname");
         return ui->stackedWidget->setCurrentWidget(ui->page_6);
+    } else if(player1.Nickname == player2.Nickname) {
+        ui->label_29->setText("player 1 and 2  name cannot be the same!");
+        return ui->stackedWidget->setCurrentWidget(ui->page_6);
     } else {
         ui->label_29->setText("");
     }
@@ -572,7 +606,7 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_19_clicked()
 {
     player1 = { "Frieren", ui->lineEdit_2->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
-    ui->pushButton_28->setText("Zoltraak");
+    ui->pushButton_28->setText("Zoltraak | Mana cost: 30");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
 }
@@ -580,7 +614,7 @@ void MainWindow::on_pushButton_19_clicked()
 void MainWindow::on_pushButton_17_clicked()
 {
     player1 = {"Himmel", ui->lineEdit_2->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
-    ui->pushButton_28->setText("Swordsman");
+    ui->pushButton_28->setText("Swordsman | Mana cost: 30");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
 }
@@ -588,7 +622,7 @@ void MainWindow::on_pushButton_17_clicked()
 void MainWindow::on_pushButton_18_clicked()
 {
     player1 = {"Eisen", ui->lineEdit_2->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
-    ui->pushButton_28->setText("Lighting Strike");
+    ui->pushButton_28->setText("Lighting Strike | Mana cost: 30");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
 }
@@ -597,7 +631,7 @@ void MainWindow::on_pushButton_18_clicked()
 void MainWindow::on_pushButton_20_clicked()
 {
     player1 = {"Heiter", ui->lineEdit_2->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
-    ui->pushButton_28->setText("Recovery");
+    ui->pushButton_28->setText("Recovery | Mana cost: 30");
     ui->label_17->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     updateStatsMP();
 }
@@ -619,7 +653,7 @@ void MainWindow::on_pushButton_25_clicked()
 void MainWindow::on_pushButton_21_clicked()
 {
     player2 = { "Frieren", ui->lineEdit_3->text().toStdString(), 150, 150, 400, 400, 35, 10, 10 };
-    ui->pushButton_32->setText("Zoltraak");
+    ui->pushButton_32->setText("Zoltraak | Mana cost: 30");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
 }
@@ -628,7 +662,7 @@ void MainWindow::on_pushButton_21_clicked()
 void MainWindow::on_pushButton_23_clicked()
 {
     player2 = {"Himmel", ui->lineEdit_3->text().toStdString(), 200, 200, 100, 100, 35, 10, 10};
-    ui->pushButton_32->setText("Swordsman");
+    ui->pushButton_32->setText("Swordsman | Mana cost: 30");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
 }
@@ -637,7 +671,7 @@ void MainWindow::on_pushButton_23_clicked()
 void MainWindow::on_pushButton_22_clicked()
 {
     player2 = {"Eisen", ui->lineEdit_3->text().toStdString(), 200, 200, 100, 100, 30, 20, 20};
-    ui->pushButton_32->setText("Lighting Strike");
+    ui->pushButton_32->setText("Lighting Strike | Mana cost: 30");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
 }
@@ -646,7 +680,7 @@ void MainWindow::on_pushButton_22_clicked()
 void MainWindow::on_pushButton_24_clicked()
 {
     player2 = {"Heiter", ui->lineEdit_3->text().toStdString(), 150, 150, 350, 350, 25, 10, 10};
-    ui->pushButton_32->setText("Recovery");
+    ui->pushButton_32->setText("Recovery | Mana cost: 30");
     ui->label_20->setText(QString::fromStdString(player2.Nickname) + "`s Stats (" + QString::fromStdString(player2.name) + ")");
     updateStatsMP();
     nextTurn();
