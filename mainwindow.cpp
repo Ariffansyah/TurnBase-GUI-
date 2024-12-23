@@ -298,13 +298,33 @@ void MainWindow::FullRecover(Character& player) {
 
 void MainWindow::Passive(Character& player){
     if (player.name == "Frieren") {
-        player.mana += 10;
+        if(player.health < player.maxHealth) {
+            int manaAmount = randomInRange(0,  5);
+            manaAmount = min(manaAmount, player.maxMana - player.mana);
+            player.mana += manaAmount;
+        }
+        return;
     } else if (player.name == "Himmel") {
-        player.health += 5;
+        if(player.health < player.maxHealth) {
+            int healAmount = randomInRange(0,  5);
+            healAmount = min(healAmount, player.maxHealth - player.health);
+                    player.health += healAmount;
+        }
+        return;
     } else if (player.name == "Eisen") {
-        player.health += 10;
+        if(player.health < player.maxHealth) {
+            int healAmount = randomInRange(0,  5);
+            healAmount = min(healAmount, player.maxHealth - player.health);
+            player.health += healAmount;
+        }
+        return;
     } else if (player.name == "Heiter") {
-        player.mana += 10;
+        if(player.health < player.maxHealth) {
+            int manaAmount = randomInRange(0,  5);
+            manaAmount = min(manaAmount, player.maxMana - player.mana);
+            player.mana += manaAmount;
+        }
+        return;
     }
 }
 
@@ -414,6 +434,7 @@ void MainWindow::SinglePlayerFrieren() {
 
     ui->pushButton_9->setText("Zoltraak | Mana cost: 30");
     randomOpp(opponent);
+    fightCount = 0;
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     ui->label_5->setText(QString::fromStdString(opponent.Nickname) + "`s Stats");
@@ -425,6 +446,7 @@ void MainWindow::SinglePlayerEisen() {
 
     ui->pushButton_9->setText("Lighting Strike | Mana cost: 30");
     randomOpp(opponent);
+    fightCount = 0;
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     ui->label_5->setText(QString::fromStdString(opponent.Nickname) + "`s Stats");
@@ -437,6 +459,7 @@ void MainWindow::SinglePlayerHimmel() {
 
     ui->pushButton_9->setText("Swordsman | Mana cost: 30");
     randomOpp(opponent);
+    fightCount = 0;
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     ui->label_5->setText(QString::fromStdString(opponent.Nickname) + "`s Stats");
@@ -448,6 +471,7 @@ void MainWindow::SinglePlayerHeiter() {
 
     ui->pushButton_9->setText("Recovery | Mana cost: 30");
     randomOpp(opponent);
+    fightCount = 0;
 
     ui->label_4->setText(QString::fromStdString(player1.Nickname) + "`s Stats (" + QString::fromStdString(player1.name) + ")");
     ui->label_5->setText(QString::fromStdString(opponent.Nickname) + "`s Stats");
