@@ -78,8 +78,6 @@ void MainWindow::randomOpp(Character& opponent) {
         ui->label_5->setText("Draht' Stats");
         return;
     }
-
-    opponent = {"Draht", "Draht", 100, 100 , 40, 40, 20, 10, 10};
 }
 
 void MainWindow::opponentTurn(Character& attacker, Character& defender) {
@@ -119,8 +117,10 @@ void MainWindow::CritChance(Character& attacker, Character& defender) {
 
     if(critChances <= 15) {
         Crit(attacker, defender);
+        return;
     } else {
         attack(attacker, defender);
+        return;
     }
 }
 
