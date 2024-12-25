@@ -385,7 +385,7 @@ void MainWindow::endTurn(){
 
 void MainWindow::endTurnMP(Character& player){
     updateStatsMP();
-    checkGameOver();
+    checkGameOverMP();
     nextTurn();
     ManaRegen(player);
     Passive(player);
@@ -542,7 +542,7 @@ void MainWindow::on_pushButton_14_clicked()
 void MainWindow::checkGameOver() {
 
     if (player1.health <= 0) {
-        ui->label_13->setText("You are defeated!");
+        ui->label_13->setText("you are defeated!");
         ui->stackedWidget->setCurrentWidget(ui->page_5);
         return;
     }
