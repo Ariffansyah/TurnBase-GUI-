@@ -9,6 +9,8 @@
 
 using namespace std;
 
+//base
+
 int currentTurn = 0;
 
 int randomInRange(int x, int y) {
@@ -355,6 +357,41 @@ void MainWindow::updateMessageMP(Character& character, const QString& message) {
     }
 }
 
+void MainWindow::checkGameOver() {
+
+    if (player1.health <= 0) {
+        ui->label_13->setText("you are defeated!");
+        ui->stackedWidget->setCurrentWidget(ui->page_5);
+        return;
+    }
+
+    if (fightCount >= 3) {
+        ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
+        ui->stackedWidget->setCurrentWidget(ui->page_5);
+        return;
+    }
+
+    if (opponent.health <= 0) {
+        updateMessage(opponent, QString::fromStdString(opponent.name) + " is defeated!");
+        randomOpp(opponent);
+        fightCount++;
+    }
+
+    QTimer::singleShot(1000, this, [this]() { checkGameOver(); });
+}
+
+void MainWindow::checkGameOverMP() {
+    if (player1.health <= 0) {
+        ui->label_13->setText(QString::fromStdString(player2.Nickname) + " is the winner!");
+        ui->stackedWidget->setCurrentWidget(ui->page_5);
+        currentTurn = 1;
+    } else if (player2.health <= 0) {
+        ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
+        ui->stackedWidget->setCurrentWidget(ui->page_5);
+        currentTurn = 1;
+    }
+}
+
 void MainWindow::updateStatsMP() {
     ui->label_18->setText("HP: " + QString::number(player1.health));
     ui->label_19->setText("Mana: " + QString::number(player1.mana));
@@ -404,6 +441,8 @@ void MainWindow::updateUIForTurn() {
     ui->pushButton_32->setEnabled(!isPlayer1Turn);
     ui->pushButton_33->setEnabled(!isPlayer1Turn);
 }
+
+//single player
 
 void MainWindow::on_lineEdit_textChanged(const QString &arg1) {
     storedNickname = arg1.isEmpty() ? "Homan" : arg1;
@@ -537,41 +576,6 @@ void MainWindow::on_pushButton_14_clicked()
 {
     SinglePlayerHeiter();
     ui->stackedWidget->setCurrentWidget(ui->page_4);
-}
-
-void MainWindow::checkGameOver() {
-
-    if (player1.health <= 0) {
-        ui->label_13->setText("you are defeated!");
-        ui->stackedWidget->setCurrentWidget(ui->page_5);
-        return;
-    }
-
-    if (fightCount >= 3) {
-        ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
-        ui->stackedWidget->setCurrentWidget(ui->page_5);
-        return;
-    }
-
-    if (opponent.health <= 0) {
-        updateMessage(opponent, QString::fromStdString(opponent.name) + " is defeated!");
-        randomOpp(opponent);
-        fightCount++;
-    }
-
-    QTimer::singleShot(1000, this, [this]() { checkGameOver(); });
-}
-
-void MainWindow::checkGameOverMP() {
-    if (player1.health <= 0) {
-        ui->label_13->setText(QString::fromStdString(player2.Nickname) + " is the winner!");
-        ui->stackedWidget->setCurrentWidget(ui->page_5);
-        currentTurn = 1;
-    } else if (player2.health <= 0) {
-        ui->label_13->setText(QString::fromStdString(player1.Nickname) + " is the winner!");
-        ui->stackedWidget->setCurrentWidget(ui->page_5);
-        currentTurn = 1;
-    }
 }
 
 void MainWindow::on_pushButton_15_clicked()
